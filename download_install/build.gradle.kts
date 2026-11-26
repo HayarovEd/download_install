@@ -55,7 +55,7 @@ dependencies {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            groupId = "com.github.edurda77"
+            groupId = "com.github.HayarovEd"
             artifactId = "download_install"
             version = "1.0.0"
 

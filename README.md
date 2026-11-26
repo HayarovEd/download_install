@@ -29,7 +29,7 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("com.github.edurda77:download_install:1.0.0")
+    implementation("com.github.HayarovEd:download_install:1.0.0")
 }
 ```
 
