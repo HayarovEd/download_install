@@ -37,6 +37,7 @@ import com.edurda77.download_install.utils.UPDATE_AVAILABLE_CHANNEL
 import com.edurda77.download_install.utils.UPDATE_AVAILABLE_NOTIFICATION_ID
 import com.edurda77.download_install.utils.getCurrentAppVersionName
 import com.edurda77.download_install.utils.isNewVersionAvailable
+import com.edurda77.download_install.utils.shouldNotifyUpdate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -118,7 +119,12 @@ class CheckUpdateWorker(
         val lastNotifiedVersion = prefs.getString(KEY_LAST_NOTIFIED_VERSION, null)
 
         if (isNewVersionAvailable(currentVersion, lastVersionApp.lastVersion)) {
-            val shouldNotify = forceNotify || lastNotifiedVersion != lastVersionApp.lastVersion
+            val shouldNotify = shouldNotifyUpdate(
+                currentVersion = currentVersion,
+                latestVersion = lastVersionApp.lastVersion,
+                lastNotifiedVersion = lastNotifiedVersion,
+                forceNotify = forceNotify
+            )
             if (shouldNotify && canPostNotifications(context)) {
                 showUpdateAvailableNotification(
                     context = context,

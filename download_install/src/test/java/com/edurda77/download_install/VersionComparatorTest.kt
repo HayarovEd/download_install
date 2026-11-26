@@ -1,6 +1,7 @@
 package com.edurda77.download_install
 
 import com.edurda77.download_install.utils.isNewVersionAvailable
+import com.edurda77.download_install.utils.shouldNotifyUpdate
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -32,5 +33,19 @@ class VersionComparatorTest {
         assertFalse(isNewVersionAvailable("", "1.012"))
         assertFalse(isNewVersionAvailable("1.011", ""))
         assertFalse(isNewVersionAvailable("abc", "1.012"))
+    }
+
+    @Test
+    fun `notification is skipped when already notified for same or higher version`() {
+        assertTrue(shouldNotifyUpdate("1.011", "1.012", null))
+        assertFalse(shouldNotifyUpdate("1.011", "1.012", "1.012"))
+        assertFalse(shouldNotifyUpdate("1.011", "v1.012", "1.012"))
+        assertFalse(shouldNotifyUpdate("1.011", "1.011.5", "1.012"))
+    }
+
+    @Test
+    fun `notification is shown only when server version exceeds last notified version`() {
+        assertTrue(shouldNotifyUpdate("1.011", "1.013", "1.012"))
+        assertTrue(shouldNotifyUpdate("1.011", "1.012", "1.012", forceNotify = true))
     }
 }

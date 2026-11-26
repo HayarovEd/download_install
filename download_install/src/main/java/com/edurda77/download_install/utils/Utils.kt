@@ -54,3 +54,15 @@ fun isNewVersionAvailable(currentVersion: String, latestVersion: String): Boolea
         false
     }
 }
+
+fun shouldNotifyUpdate(
+    currentVersion: String,
+    latestVersion: String,
+    lastNotifiedVersion: String?,
+    forceNotify: Boolean = false
+): Boolean {
+    if (!isNewVersionAvailable(currentVersion, latestVersion)) return false
+    if (forceNotify) return true
+    if (lastNotifiedVersion.isNullOrBlank()) return true
+    return isNewVersionAvailable(lastNotifiedVersion, latestVersion)
+}
