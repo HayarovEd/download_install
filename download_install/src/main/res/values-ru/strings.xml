@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="download_update">Загрузка обновления</string>
+    <string name="download_error">Ошибка загрузки</string>
+    <string name="download_success">Обновление загружено</string>
+    <string name="server_error">Ошибка сервера</string>
+    <string name="bad_request">Неверный запрос</string>
+    <string name="timeout_error">Превышен интервал ожидания</string>
+    <string name="unknown_version">Не удалось определить версию приложения</string>
+    <string name="unknown">Неизвестная ошибка</string>
+    <string name="update_downloaded">Обновление загружено</string>
+    <string name="download_finished">Загрузка окончена</string>
+    <string name="update_available_channel_name">Доступные обновления</string>
+    <string name="update_available_channel_description">Уведомления о выходе новой версии приложения</string>
+    <string name="update_available_title">Доступно обновление</string>
+    <string name="update_available_text">Доступна новая версия %1$s (v%2$s). Нажмите, чтобы обновить.</string>
+    <string name="update_available_action">Загрузить</string>
+    <string name="update_downloaded_tap_to_install">Нажмите, чтобы установить обновление</string>
+</resources>

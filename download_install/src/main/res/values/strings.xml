@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="download_update">Downloading update</string>
+    <string name="download_error">Download error</string>
+    <string name="download_success">Update downloaded</string>
+    <string name="server_error">Server error</string>
+    <string name="bad_request">Bad request</string>
+    <string name="timeout_error">Request timed out</string>
+    <string name="unknown_version">Unable to determine app version</string>
+    <string name="unknown">Unknown error</string>
+    <string name="update_downloaded">Update downloaded</string>
+    <string name="download_finished">Download finished</string>
+    <string name="update_available_channel_name">Available updates</string>
+    <string name="update_available_channel_description">Notifications about new application versions</string>
+    <string name="update_available_title">Update available</string>
+    <string name="update_available_text">New version %1$s (v%2$s) is available. Tap to update.</string>
+    <string name="update_available_action">Download</string>
+    <string name="update_downloaded_tap_to_install">Tap to install the update</string>
+</resources>
