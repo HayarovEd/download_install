@@ -35,24 +35,62 @@ fun isNewVersionAvailable(currentVersion: String, latestVersion: String): Boolea
 
     return try {
         val currentParts = currentNormalized.split(".").map { part ->
-            part.takeWhile { it.isDigit() }.toIntOrNull() ?: return false
+            part.takeWhile { it.isDigit() }.also { if (it.isEmpty()) return false }
         }
         val latestParts = latestNormalized.split(".").map { part ->
-            part.takeWhile { it.isDigit() }.toIntOrNull() ?: return false
+            part.takeWhile { it.isDigit() }.also { if (it.isEmpty()) return false }
         }
         if (currentParts.isEmpty() || latestParts.isEmpty()) return false
 
         val maxLength = maxOf(currentParts.size, latestParts.size)
         for (i in 0 until maxLength) {
-            val currentPart = currentParts.getOrElse(i) { 0 }
-            val latestPart = latestParts.getOrElse(i) { 0 }
-            if (latestPart > currentPart) return true
-            if (latestPart < currentPart) return false
+            val currentPart = currentParts.getOrElse(i) { "0" }
+            val latestPart = latestParts.getOrElse(i) { "0" }
+            val cmp = compareVersionSegment(
+                left = latestPart,
+                right = currentPart,
+                allowFractionalLeadingZeros = i > 0
+            )
+            if (cmp > 0) return true
+            if (cmp < 0) return false
         }
         false
     } catch (e: Exception) {
         false
     }
+}
+
+private fun compareVersionSegment(
+    left: String,
+    right: String,
+    allowFractionalLeadingZeros: Boolean
+): Int {
+    val leftTrimmed = left.trimStart('0')
+    val rightTrimmed = right.trimStart('0')
+
+    if (leftTrimmed.isEmpty() && rightTrimmed.isEmpty()) return 0
+    if (leftTrimmed.isEmpty()) return -1
+    if (rightTrimmed.isEmpty()) return 1
+
+    if (allowFractionalLeadingZeros) {
+        val leftHasLeadingZero = left.length > 1 && left.startsWith('0')
+        val rightHasLeadingZero = right.length > 1 && right.startsWith('0')
+
+        if (leftHasLeadingZero || rightHasLeadingZero) {
+            if (leftHasLeadingZero != rightHasLeadingZero) {
+                // Any positive 0.xxx (< 0.1) is strictly smaller than any positive integer segment (>= 0.1)
+                return if (leftHasLeadingZero) -1 else 1
+            }
+            // Both have leading zeros (e.g. "001" vs "01" -> "001" vs "010")
+            val maxLen = maxOf(left.length, right.length)
+            return left.padEnd(maxLen, '0').compareTo(right.padEnd(maxLen, '0'))
+        }
+    }
+
+    if (leftTrimmed.length != rightTrimmed.length) {
+        return leftTrimmed.length.compareTo(rightTrimmed.length)
+    }
+    return leftTrimmed.compareTo(rightTrimmed)
 }
 
 fun shouldNotifyUpdate(
